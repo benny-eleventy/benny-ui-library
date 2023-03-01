@@ -1,0 +1,7 @@
+{
+  "packageManager": "yarn@1.22.19",
+  "name": "benny-ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}

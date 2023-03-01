@@ -8,6 +8,11 @@
 	"workspaces": [
 		"packages/*"
 	],
+	"scripts": {
+		"storybook": "start-storybook -p 6006",
+		"build-storybook": "build-storybook",
+		"test": "jest --config ./jest.config.js"
+	},
 	"devDependencies": {
 		"@rollup/plugin-alias": "^4.0.3",
 		"@rollup/plugin-babel": "^6.0.3",

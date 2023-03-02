@@ -1,6 +1,6 @@
 {
 	"name": "@bennyui/core",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
 	"type": "module",
@@ -10,9 +10,9 @@
 	"types": "dist/index.d.ts",
 	"peerDependencies": {
 		"framer-motion": "^9.0.2",
-		"styled-components": "^5.3.6",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"styled-components": "^5.3.6"
 	},
 	"scripts": {
 		"build": "rimraf dist && rollup --config --bundleConfigAsCjs",

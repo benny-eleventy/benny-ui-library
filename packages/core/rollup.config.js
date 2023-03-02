@@ -3,7 +3,7 @@ import typescript from "@rollup/plugin-typescript";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import terser from "@rollup/plugin-terser";
 import resolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
+import { getBabelOutputPlugin } from "@rollup/plugin-babel";
 
 const externalDependencies = [
 	"react",
@@ -21,17 +21,24 @@ export default {
 			entryFileNames: "[name].js",
 			format: "esm",
 			exports: "named",
+			plugins: [
+				getBabelOutputPlugin({
+					filename: "[name].js",
+					presets: ["@babel/preset-env", "@babel/preset-react"],
+					plugins: [["babel-plugin-styled-components", { displayName: true }]],
+				}),
+			],
 		},
 	],
 	external: externalDependencies,
 	plugins: [
 		peerDepsExternal(),
 		resolve(),
-		babel({
-			exclude: "node_modules/**",
-			presets: ["@babel/preset-env", "@babel/preset-react"],
-			plugins: ["babel-plugin-styled-components"],
-		}),
+		// babel({
+		// 	exclude: "node_modules/**",
+		// 	presets: ["@babel/preset-env", "@babel/preset-react"],
+		// 	plugins: ["babel-plugin-styled-components"],
+		// }),
 		commonjs(),
 		typescript({
 			tsconfig: "tsconfig.json",

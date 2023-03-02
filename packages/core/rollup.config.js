@@ -35,11 +35,11 @@ export default {
 		peerDepsExternal(),
 		resolve(),
 		commonjs(),
+		babel(customBabelConfig),
 		typescript({
 			tsconfig: "tsconfig.json",
 			exclude: ["src/**/*.spec.tsx", "src/**/*.stories.tsx"],
 		}),
-		babel(customBabelConfig),
 		terser(),
 	],
 };

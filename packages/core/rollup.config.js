@@ -3,14 +3,12 @@ import typescript from "@rollup/plugin-typescript";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import terser from "@rollup/plugin-terser";
 import resolve from "@rollup/plugin-node-resolve";
-import { babel } from "@rollup/plugin-babel";
+import createStyledComponentsTransformer from "typescript-plugin-styled-components";
 
-const customBabelConfig = {
-	babelHelpers: "bundled",
-	plugins: [
-		["babel-plugin-styled-components", { displayName: true, ssr: true }],
-	],
-};
+const styledComponentsTransformer = createStyledComponentsTransformer({
+	displayName: true,
+	ssr: true,
+});
 
 const externalDependencies = [
 	"react",
@@ -35,9 +33,9 @@ export default {
 		peerDepsExternal(),
 		resolve(),
 		commonjs(),
-		babel(customBabelConfig),
 		typescript({
 			tsconfig: "tsconfig.json",
+			transformers: [() => ({ before: [styledComponentsTransformer] })],
 			exclude: ["src/**/*.spec.tsx", "src/**/*.stories.tsx"],
 		}),
 		terser(),

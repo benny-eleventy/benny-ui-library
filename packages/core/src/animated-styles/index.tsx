@@ -9,7 +9,7 @@ import type {
 	EasingDefinition,
 } from "framer-motion";
 import type { ComponentType, ReactNode } from "react";
-import React from "react";
+import * as React from "react";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 

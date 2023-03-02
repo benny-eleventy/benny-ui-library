@@ -77,15 +77,11 @@ const Button = (props: ButtonProps) => {
 				{rightIcon && rightIcon}
 			</A.Button>
 			<>
-				{props.tooltipText && (
+				{tooltipText && (
 					<ToolTip
 						displayTooltip={isHovered}
-						tooltipText={props.tooltipText}
-						position={
-							props.tooltipPosition
-								? props.tooltipPosition
-								: ["bottom", "0.5rem"]
-						}
+						tooltipText={tooltipText}
+						position={tooltipPosition ? tooltipPosition : ["bottom", "0.5rem"]}
 					/>
 				)}
 			</>

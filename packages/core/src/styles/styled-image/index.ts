@@ -9,4 +9,5 @@ export const Image = styled.img<ImageProps>`
 	object-fit: ${(props) => (props.objectFit ? props.objectFit : "cover")};
 	object-position: ${(props) =>
 		props.objectPosition ? props.objectPosition : "center"};
+	border-radius: ${(props) => (props.borderRadius ? props.borderRadius : "0")};
 `;

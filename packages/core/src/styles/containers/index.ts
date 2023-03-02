@@ -125,70 +125,84 @@ export const Container = styled.div<CoreProps>`
 	scrollbar-thumb-color: ${(props) => props.scrollBarThumbColor};
 `;
 
-export const ColumnContainer = styled(Container)<CoreProps>`
+export const CenterAlignedColumnContainer = styled(Container)<CoreProps>`
 	display: flex;
 	flex-direction: column;
-`;
-
-export const RowContainer = styled(Container)<CoreProps>`
-	display: flex;
-	flex-direction: row;
-`;
-
-export const CenterAlignedColumnContainer = styled(ColumnContainer)<CoreProps>`
 	align-items: center;
 	justify-content: center;
 `;
 
 export const FlexStartCenterAlignedColumnContainer = styled(
-	ColumnContainer
+	Container
 )<CoreProps>`
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
 `;
 
-export const FlexStartColumnContainer = styled(ColumnContainer)<CoreProps>`
+export const FlexStartColumnContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: column;
 	justify-content: flex-start;
 	align-items: flex-start;
 `;
 
-export const OverflowColumnContainer = styled(
-	FlexStartCenterAlignedColumnContainer
-)<CoreProps>`
+export const OverflowColumnContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
 	overflow: auto;
 `;
 
-export const CenterAlignedRowContainer = styled(RowContainer)<CoreProps>`
+export const CenterAlignedRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
 	align-items: center;
 	justify-content: center;
 `;
 
-export const FlexStartRowContainer = styled(RowContainer)<CoreProps>`
+export const FlexStartRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
 `;
 
-export const FlexEndRowContainer = styled(RowContainer)<CoreProps>`
+export const FlexEndRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
 	justify-content: flex-end;
 	align-items: center;
 `;
 
-export const SpaceBetweenRowContainer = styled(RowContainer)<CoreProps>`
+export const SpaceBetweenRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 `;
 
-export const OverflowRowContainer = styled(FlexStartRowContainer)<CoreProps>`
+export const OverflowRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 	overflow: auto;
 `;
 
-export const WrapppedRowContainer = styled(RowContainer)<CoreProps>`
+export const WrapppedRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
 `;
 
-export const WrappedFlexStartRowContainer = styled(RowContainer)<CoreProps>`
+export const WrappedFlexStartRowContainer = styled(Container)<CoreProps>`
+	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: flex-start;

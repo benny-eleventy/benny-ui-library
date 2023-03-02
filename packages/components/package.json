@@ -12,6 +12,9 @@
 		"build": "rimraf dist && rollup --config --bundleConfigAsCjs",
 		"test": "jest"
 	},
+	"peerDependencies": {
+		"@bennyui/core": "^0.0.8"
+	},
 	"publishConfig": {
 		"access": "public"
 	}

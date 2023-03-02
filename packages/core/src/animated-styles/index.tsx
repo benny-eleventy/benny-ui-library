@@ -179,10 +179,6 @@ function createAnimatedComponent(componentName: string) {
 
 A.Container = createAnimatedComponent(C.Container);
 
-A.ColumnContainer = createAnimatedComponent(C.ColumnContainer);
-
-A.RowContainer = createAnimatedComponent(C.RowContainer);
-
 A.CenterAlignedColumnContainer = createAnimatedComponent(
 	C.CenterAlignedColumnContainer
 );

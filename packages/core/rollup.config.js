@@ -25,7 +25,19 @@ export default {
 				getBabelOutputPlugin({
 					filename: "[name].js",
 					presets: ["@babel/preset-env", "@babel/preset-react"],
-					plugins: [["babel-plugin-styled-components", { displayName: true }]],
+					plugins: [
+						[
+							"babel-plugin-styled-components",
+							{
+								displayName: true,
+								ssr: true,
+								fileName: false,
+								pure: true,
+								minify: true,
+								transpileTemplateLiterals: true,
+							},
+						],
+					],
 				}),
 			],
 		},

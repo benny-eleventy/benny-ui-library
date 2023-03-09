@@ -278,7 +278,6 @@ Icon.Cancel = React.memo(createIconComponent("CancelIcon"));
 Icon.Checkbox = React.memo(createIconComponent("CheckboxIcon"));
 Icon.Chevron = React.memo(createIconComponent("ChevronIcon"));
 Icon.Close = React.memo(createIconComponent("CloseIcon"));
-Icon.Hey = React.memo(createIconComponent("HeyIcon"));
 Icon.Home = React.memo(createIconComponent("HomeIcon"));
 Icon.Logo = React.memo(createIconComponent("LogoIcon"));
 Icon.Menu = React.memo(createIconComponent("MenuIcon"));

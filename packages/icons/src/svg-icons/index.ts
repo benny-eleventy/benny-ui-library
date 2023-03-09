@@ -3,7 +3,6 @@ import CancelIcon from "./CancelIcon";
 import CheckboxIcon from "./CheckboxIcon";
 import ChevronIcon from "./ChevronIcon";
 import CloseIcon from "./CloseIcon";
-import HeyIcon from "./HeyIcon";
 import HomeIcon from "./HomeIcon";
 import MenuIcon from "./MenuIcon";
 import QuotesIcon from "./QuotesIcon";
@@ -20,7 +19,6 @@ export {
 	CheckboxIcon,
 	ChevronIcon,
 	CloseIcon,
-	HeyIcon,
 	HomeIcon,
 	MenuIcon,
 	QuotesIcon,

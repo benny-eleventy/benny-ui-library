@@ -11,13 +11,13 @@ import { useCallback, useEffect } from "react";
 
 interface ButtonProps extends CoreProps {
 	// Add props here
+	isLoading?: boolean;
 	label?: string;
+	leftIcon?: React.ReactNode;
 	onClick: () => void;
 	rightIcon?: React.ReactNode;
-	leftIcon?: React.ReactNode;
-	tooltipText?: string;
 	tooltipPosition?: string[];
-	isLoading?: boolean;
+	tooltipText?: string;
 }
 
 const Button = (props: ButtonProps) => {

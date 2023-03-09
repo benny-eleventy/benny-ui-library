@@ -8,49 +8,47 @@ import {
 import * as React from "react";
 interface InputBoxProps {
 	// Add props here
+	activeBorderColor?: string;
+	autoComplete?: string;
+	borderColor?: string;
+	borderWidth?: string;
+	dataTestId?: string;
+	displayClearText?: boolean;
+	focusInputBox?: boolean;
+	focusOnMount?: boolean;
+	hoverBorderColor?: string;
 	id: string;
-	value: string | " ";
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	leftIcon?: React.ReactNode;
 	onBlur?: () => void;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	onClear?: (e: React.ChangeEvent<HTMLDivElement>) => void;
 	onEnter?: () => void;
 	placeholder?: string;
-	borderWidth?: string;
-	activeBorderColor?: string;
-	borderColor?: string;
-	hoverBorderColor?: string;
-	focusOnMount?: boolean;
-	focusInputBox?: boolean;
-	rightIcon?: React.ReactNode;
-	leftIcon?: React.ReactNode;
-	hideClearIcon?: boolean;
-	autoComplete?: string;
-	displayClearText?: boolean;
 	placeholderColor?: string;
-	dataTestId?: string;
+	rightIcon?: React.ReactNode;
+	value: string | " ";
 }
 
 const InputBox = ({
+	activeBorderColor = "#A685E2",
+	autoComplete,
+	borderColor = "rgba(255, 255, 255, 0.5)",
+	borderWidth = "2px",
+	dataTestId,
+	displayClearText = true,
+	focusInputBox = false,
+	focusOnMount = false,
+	hoverBorderColor = "#FFEB99",
 	id,
-	value,
-	onChange,
+	leftIcon,
 	onBlur,
+	onChange,
 	onClear,
 	onEnter,
 	placeholder,
-	borderWidth = "2px",
-	activeBorderColor = "#A685E2",
-	borderColor = "rgba(255, 255, 255, 0.5)",
-	hoverBorderColor = "#FFEB99",
-	focusOnMount = false,
-	focusInputBox = false,
-	rightIcon,
-	leftIcon,
-	hideClearIcon,
-	autoComplete,
-	displayClearText = true,
 	placeholderColor = "rgba(255, 255, 255, 0.5)",
-	dataTestId,
+	rightIcon,
+	value,
 	...rest
 }: InputBoxProps) => {
 	const inputBoxRef = React.useRef<HTMLInputElement>(null);

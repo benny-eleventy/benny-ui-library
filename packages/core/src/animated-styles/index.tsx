@@ -28,27 +28,27 @@ interface AcustomInterface {
 type unionProps = CoreProps & MotionProps & AcustomInterface;
 
 interface GcustomInterface {
-	animationType: "opacity" | "scale" | "rotate" | "x" | "y" | "none";
-	animationDuration: number[];
 	animationConfig: number[];
+	animationDelay: number;
+	animationDuration: number[];
 	animationEasing: EasingDefinition;
-	hoverAnimation: Variant;
-	clickAnimation: Variant;
 	animationRepeat: number;
 	animationRepeatType: "loop" | "reverse" | "none" | "mirror";
-	animationDelay: number;
+	animationType: "opacity" | "scale" | "rotate" | "x" | "y" | "none";
+	clickAnimation: Variant;
+	hoverAnimation: Variant;
 }
 
 const generateAnimationTypeVariants = ({
-	animationType,
-	animationDuration,
 	animationConfig,
-	animationEasing,
-	hoverAnimation,
-	clickAnimation,
 	animationDelay,
+	animationDuration,
+	animationEasing,
 	animationRepeat,
 	animationRepeatType,
+	animationType,
+	clickAnimation,
+	hoverAnimation,
 }: GcustomInterface): Variants => {
 	const initialvalue = animationConfig[0];
 	const animatevalue = animationConfig[1];

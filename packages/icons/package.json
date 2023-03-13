@@ -13,7 +13,8 @@
 		"test": "jest"
 	},
 	"peerDependencies": {
-		"@bennyui/core": ">=0.0.9 <1.0.0"
+		"@bennyui/core": ">=0.0.9 <1.0.0",
+		"@bennyui/components": ">=0.0.9 <1.0.0"
 	},
 	"publishConfig": {
 		"access": "public"

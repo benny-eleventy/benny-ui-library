@@ -8,10 +8,10 @@ export const Container = styled.div.attrs<CoreProps>(({ dataTestId }) => ({
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
 
-	max-width: ${(props) => (props.maxWidth ? props.maxWidth : "100%")};
-	max-height: ${(props) => (props.maxHeight ? props.maxHeight : "100%")};
-	min-width: ${(props) => (props.minWidth ? props.minWidth : "auto")};
-	min-height: ${(props) => (props.minHeight ? props.minHeight : "auto")};
+	max-width: ${(props) => props.maxWidth};
+	max-height: ${(props) => props.maxHeight};
+	min-width: ${(props) => props.minWidth}
+	min-height: ${(props) => props.minHeight};
 
 	position: ${(props) => props.position};
 	top: ${(props) => props.top};

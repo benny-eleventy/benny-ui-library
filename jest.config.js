@@ -12,5 +12,6 @@ module.exports = {
 		"^@bennytestui1/styles": "<rootDir>/packages/styles/src",
 		"^@bennytestui1/constants(.*)$": "<rootDir>/packages/constants/src$1",
 		"@bennyui/core": "<rootDir>/packages/core/src",
+		"@bennyui/components": "<rootDir>/packages/components/src",
 	},
 };

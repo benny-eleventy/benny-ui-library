@@ -2,64 +2,59 @@ import * as I from "./svg-icons";
 import * as React from "react";
 import {
 	A,
+	AnimatedContainerProps,
 	AnimatePresence,
-	CoreProps,
-	fs_small,
-	fw_regular,
+	CustomAnimation,
 	s_xxsmall,
-	Text,
 } from "@bennyui/core";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { Tooltip } from "@bennyui/components";
+import { checkConditions } from "./utils/errorCheck";
+import { getInlineStyles } from "./utils/getInlineStyles";
 
 export const Icon = (props: { children: any }) => {
 	return <>{props.children}</>;
 };
 
-type ActiveIndicatorType = {
-	background?: string;
-	borderBottom?: string;
-	color?: string;
-	opacity?: string | number;
-	scale?: string | number;
+type ReactComponent = React.ReactElement<
+	any,
+	string | React.JSXElementConstructor<any>
+>;
+
+type TooltipType = {
+	label: string;
+	position?: string[];
+	styles?: React.CSSProperties;
+	disabledStyles?: React.CSSProperties;
+	leftIcon?: ReactComponent;
+	rightIcon?: ReactComponent;
+	animation?: CustomAnimation;
 };
 
-interface IconCoreProps extends CoreProps {
+type IndicatorType = {
+	label?: string;
+	leftIcon?: ReactComponent;
+	rightIcon?: ReactComponent;
+	styles?: React.CSSProperties;
+	tooltipLabel?: string;
+};
+
+interface IconProps extends AnimatedContainerProps {
 	color: string;
-	animateOnHover?: boolean;
+	activeIndicator?: IndicatorType;
 	clickAnimation?: any;
+	disableHoverAnimation?: boolean;
+	disableHoverAnimationWhenActive?: boolean;
 	isActive?: boolean | undefined;
-	isCursorPointer?: any;
 	onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
+	onMouseEnter?: React.MouseEventHandler<HTMLDivElement> | undefined;
+	onMouseLeave?: React.MouseEventHandler<HTMLDivElement> | undefined;
 	size?: "small" | "large" | "regular" | string;
-	tooltipPosition?: string[];
-	tooltipStyle?: any;
-	tooltipText?: string;
+	styles?: React.CSSProperties;
+	tooltip?: TooltipType;
 }
 
-interface IconProps extends IconCoreProps {
-	activeIndicator: ActiveIndicatorType;
-	isActive?: true | false;
-}
-
-interface IconWOisActive extends IconCoreProps {
-	activeIndicator?: undefined;
-	isActive?: undefined;
-}
-
-interface AnimateOnHover extends IconCoreProps {
-	animateOnHover?: true;
-	hoverAnimation: any;
-}
-
-interface AnimateHoverDisabled extends IconCoreProps {
-	animateOnHover?: false;
-	hoverAnimation?: undefined;
-}
-
-type IconPropsWithVariant = (IconProps | IconWOisActive) &
-	(AnimateOnHover | AnimateHoverDisabled);
-
-const defaultIconProps: IconPropsWithVariant = {
+const defaultIconProps: IconProps = {
 	aspectRatio: "1",
 	background: "transparent",
 	boxShadow: "none",
@@ -73,39 +68,75 @@ const defaultIconProps: IconPropsWithVariant = {
 };
 
 function createIconComponent(iconName: string) {
-	const Icon = React.memo((props: IconPropsWithVariant) => {
+	const Icon = React.memo((props: IconProps) => {
 		const {
 			activeIndicator,
-			hoverAnimation,
-			animateOnHover,
-			isActive,
 			clickAnimation,
-			tooltipText,
-			tooltipPosition,
-			tooltipStyle,
-			size,
 			color,
+			disableHoverAnimation,
+			disableHoverAnimationWhenActive,
+			hoverAnimation,
+			isActive,
 			onClick,
-			isCursorPointer,
+			onMouseEnter,
+			onMouseLeave,
+			size,
+			styles,
+			tooltip,
 			...rest
 		} = props;
 
-		if (isActive == undefined && activeIndicator) {
-			throw new Error(
-				`Icon ${iconName} is missing the isActive prop. If you are not using the activeIndicator prop, please remove it.`
-			);
-		}
+		checkConditions([
+			{
+				condition: isActive == undefined && activeIndicator,
+				message: `Icon ${iconName} is missing the isActive prop. If you are not using the activeIndicator prop, please remove it.`,
+			},
 
-		if (animateOnHover == false && hoverAnimation) {
-			throw new Error(
-				`Icon ${iconName} has animateHover as false, please remove the hoverAnimation prop.`
-			);
-		}
+			{
+				condition: (isActive == true || isActive == false) && !activeIndicator,
+				message: `Icon ${iconName} has isActive as ${isActive}, please add the activeIndicator prop.`,
+			},
+			{
+				condition: tooltip && !tooltip.label,
+				message: `Icon ${iconName} has a tooltip prop, but is missing the label prop.`,
+			},
+		]);
 
 		const [isHovered, setIsHovered] = React.useState(false);
+		const [isClicked, setIsClicked] = React.useState(false);
+
+		const handleClick = React.useCallback(
+			(e: any) => {
+				if (onClick) {
+					setIsHovered(false);
+					setIsClicked(true);
+					onClick(e);
+				}
+			},
+			[onClick]
+		);
+		const handleMouseEnter = React.useCallback(
+			(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+				setIsHovered(true);
+				if (onMouseEnter) {
+					onMouseEnter(e);
+				}
+			},
+			[]
+		);
+
+		const handleMouseLeave = React.useCallback(
+			(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+				setIsHovered(false);
+				setIsClicked(false);
+				if (onMouseLeave) {
+					onMouseLeave(e);
+				}
+			},
+			[]
+		);
 
 		const getIconSize = React.useMemo(() => {
-			console.log("getIconSize", iconName);
 			return (size: string | undefined) => {
 				switch (size) {
 					case "small":
@@ -124,129 +155,113 @@ function createIconComponent(iconName: string) {
 		const IconCmpnt = I[iconName];
 
 		const _color = color || defaultIconProps.color;
-		const _hoverAnimation = hoverAnimation || defaultIconProps.hoverAnimation;
-		const _size = size || defaultIconProps.size;
+
+		const getHoverAnimation = ({
+			hoverAnimation,
+			isActive,
+			disableHoverAnimation,
+			disableHoverAnimationWhenActive,
+			isClicked,
+		}: any) => {
+			if (disableHoverAnimation) {
+				return {};
+			}
+			if (disableHoverAnimationWhenActive && isActive) {
+				return {};
+			}
+			if (isClicked) {
+				return {};
+			}
+			return hoverAnimation;
+		};
+
+		const getTooltipLabel = ({
+			tooltipLabel,
+			activeIndicator,
+			isActive,
+		}: any) => {
+			if (activeIndicator && isActive) {
+				return activeIndicator.tooltipLabel;
+			}
+			if (tooltipLabel) {
+				return tooltip?.label;
+			}
+			return "";
+		};
+
+		const _tooltipLabel = React.useMemo(() => {
+			return getTooltipLabel({
+				tooltipLabel: tooltip?.label,
+				activeIndicator,
+				isActive,
+			});
+		}, [tooltip?.label, activeIndicator, isActive]);
+
+		const _hoverAnimation = React.useMemo(() => {
+			return getHoverAnimation({
+				hoverAnimation,
+				isActive,
+				disableHoverAnimation,
+				disableHoverAnimationWhenActive,
+				isClicked,
+			});
+		}, [
+			hoverAnimation,
+			isActive,
+			disableHoverAnimation,
+			disableHoverAnimationWhenActive,
+			isClicked,
+		]);
+
+		const _activeIndicatorStyles = activeIndicator?.styles || {};
+
+		const inLineStyles = React.useMemo(() => {
+			return getInlineStyles({
+				isActive,
+				_activeIndicatorStyles,
+				styles,
+			});
+		}, [isActive, _activeIndicatorStyles, styles]);
 
 		return (
 			<IconParentContainer
 				{...rest}
 				id={`icon-parent-container-${iconName}`}
-				dataTestId={`icon-${iconName}`}
+				dataTestId={`icon-parent-container-${iconName}`}
+				color={_color}
 				isActive={isActive}
-				onClick={onClick}
-				// @ts-ignore
-				activeIndicator={activeIndicator}
+				onClick={handleClick}
 				whileHover={_hoverAnimation}
 				whileTap={clickAnimation}
-				onHoverStart={() => setIsHovered(true)}
-				onHoverEnd={() => setIsHovered(false)}
-				cursor={onClick || isCursorPointer ? "pointer" : "default"}
-				color={_color}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
+				cursor={onClick ? "pointer" : "inherit"}
+				style={inLineStyles}
 			>
 				<A.CenterAlignedColumnContainer
-					// @ts-ignore
 					id={`icon-container-${iconName}`}
 					dataTestId={`icon-container-${iconName}`}
-					width={getIconSize(_size)}
+					width={getIconSize(size) || getIconSize(defaultIconProps.size)}
 				>
 					<IconCmpnt />
 				</A.CenterAlignedColumnContainer>
-				<>
-					{props.tooltipText && (
-						<ToolTip
+				<AnimatePresence>
+					{isHovered && tooltip?.label && (
+						<Tooltip
 							id={`icon-tooltip-${iconName}`}
-							displayTooltip={isHovered}
-							tooltipText={tooltipText || "Add tooltip text"}
-							position={tooltipPosition ? tooltipPosition : ["bottom", "1rem"]}
-							tooltipStyle={tooltipStyle}
+							position={
+								tooltip?.position ? tooltip.position : ["bottom", "1rem"]
+							}
+							{...tooltip}
+							label={_tooltipLabel}
 						/>
 					)}
-				</>
+				</AnimatePresence>
 			</IconParentContainer>
 		);
 	});
 	return Icon;
 }
-
-interface ToolTipProps {
-	id: string;
-	tooltipText: string;
-	position: string[];
-	displayTooltip: boolean;
-	tooltipStyle?: { [key: string]: string };
-}
-
-const ToolTip = (props: ToolTipProps) => {
-	const { tooltipText, position, displayTooltip, tooltipStyle } = props;
-
-	return (
-		<AnimatePresence>
-			{displayTooltip ? (
-				<>
-					<A.CenterAlignedColumnContainer
-						{...props}
-						width="auto"
-						height="auto"
-						position="absolute"
-						zIndex="1000"
-						style={{
-							[position[0]]: `calc( -${
-								position[0] == "top" || position[0] == "bottom"
-									? "50%"
-									: `${11 * tooltipText.length}px`
-							}  - ${position[1]})`,
-							...tooltipStyle,
-						}}
-						padding="0.25rem 0.4rem"
-						backgroundColor="rgba(255,255,255,0.3)"
-						animationType="opacity"
-						animationConfig={[0, 1, 0]}
-						animationDuration={[0.4, 0.2]}
-					>
-						<Text
-							fontSize={fs_small}
-							color="rgba(255,255,255,0.8)"
-							textAlign="center"
-							fontWeight={fw_regular}
-							whiteSpace="nowrap"
-						>
-							{tooltipText}
-						</Text>
-					</A.CenterAlignedColumnContainer>
-				</>
-			) : null}
-		</AnimatePresence>
-	);
-};
-
-const getActiveIndicatorStyles = (indicator: {}, value: string) => {
-	switch (indicator) {
-		case "background":
-			return css`
-				background-color: ${value || "rgba(255,255,255,0.3)"};
-			`;
-		case "color":
-			return css`
-				color: ${value || "rgba(255,255,255,0.3)"};
-			`;
-		case "borderBottom":
-			return css`
-				border-radius: 0;
-				border-bottom: ${value || "2px solid rgba(255,255,255,0.3)"};
-			`;
-		case "scale":
-			return css`
-				transform: scale(${value || 1.2});
-			`;
-		case "opacity":
-			return css`
-				opacity: ${value || 0.5};
-			`;
-
-		default:
-			return css``;
-	}
-};
 
 const IconParentContainer = styled(A.CenterAlignedColumnContainer)<IconProps>`
 	padding: ${({ padding }) => padding || defaultIconProps.padding};
@@ -259,17 +274,7 @@ const IconParentContainer = styled(A.CenterAlignedColumnContainer)<IconProps>`
 		backgroundColor || defaultIconProps.backgroundColor};
 	background: ${({ background }) => background || defaultIconProps.background};
 	}
-		
-	${({ isActive, activeIndicator }) =>
-		isActive && activeIndicator
-			? Object.keys(activeIndicator)?.map((indicator) =>
-					getActiveIndicatorStyles(
-						indicator,
-						// @ts-ignore
-						activeIndicator[indicator]
-					)
-			  )
-			: null}
+
 `;
 
 Icon.Author = React.memo(createIconComponent("AuthorsIcon"));

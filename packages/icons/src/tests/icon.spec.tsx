@@ -15,22 +15,24 @@ describe("Icon", () => {
 		const { getByTestId } = render(
 			<Icon.Search color="white" onClick={handleClick} />
 		);
-		const icon = getByTestId("icon-SearchIcon");
+		const icon = getByTestId("icon-parent-container-SearchIcon");
 		fireEvent.click(icon);
 		expect(handleClick).toHaveBeenCalledTimes(1);
 	});
 
-	it("applies activeIndicator as Styles when isActive is true", () => {
+	it("applies activeIndicator Styles when isActive is true", () => {
 		const { getByTestId } = render(
 			<Icon.Search
 				color="white"
 				isActive={true}
 				activeIndicator={{
-					borderBottom: "2px solid #fff",
+					styles: {
+						borderBottom: "2px solid #fff",
+					},
 				}}
 			/>
 		);
-		const icon = getByTestId("icon-SearchIcon");
+		const icon = getByTestId("icon-parent-container-SearchIcon");
 		expect(icon).toHaveStyle("border-bottom: 2px solid #fff");
 	});
 
@@ -42,7 +44,7 @@ describe("Icon", () => {
 
 	it("applies color as Styles when color is passed", () => {
 		const { getByTestId } = render(<Icon.Search color="seagreen" />);
-		const icon = getByTestId("icon-SearchIcon");
+		const icon = getByTestId("icon-parent-container-SearchIcon");
 		expect(icon).toHaveStyle("color: seagreen");
 	});
 
@@ -55,7 +57,7 @@ describe("Icon", () => {
 				padding="10px"
 			/>
 		);
-		const icon = getByTestId("icon-SearchIcon");
+		const icon = getByTestId("icon-parent-container-SearchIcon");
 		expect(icon).toHaveStyle("color: seagreen");
 		expect(icon).toHaveStyle("padding: 10px");
 		expect(icon).toHaveStyle("background: red");
@@ -66,5 +68,28 @@ describe("Icon", () => {
 		const { getByTestId } = render(<Icon.Search color="white" />);
 		const icon = getByTestId("icon-container-SearchIcon");
 		expect(icon).toHaveStyle("width: 48px");
+	});
+
+	it("should show tooltip when hovered", async () => {
+		const { getByTestId } = render(
+			<Icon.Search
+				color="white"
+				tooltip={{
+					label: "Hello world",
+				}}
+			/>
+		);
+		fireEvent.mouseEnter(
+			screen.getByTestId("icon-parent-container-SearchIcon")
+		);
+
+		await waitFor(
+			() => {
+				const tooltip = getByTestId("tooltip");
+				expect(getByTestId("tooltip")).toHaveStyle("opacity: 1");
+				expect(tooltip).toHaveTextContent("Hello world");
+			},
+			{ timeout: 500 }
+		);
 	});
 });

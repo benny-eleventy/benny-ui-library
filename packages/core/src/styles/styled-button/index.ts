@@ -17,11 +17,11 @@ export const Button = styled.button.attrs<CoreProps>(({ dataTestId }) => ({
 
 	width: ${(props) => (props.width ? props.width : "fit-content")};
 	height: ${(props) => (props.height ? props.height : "auto")};
-
-	max-width: ${(props) => (props.maxWidth ? props.maxWidth : "100%")};
-	max-height: ${(props) => (props.maxHeight ? props.maxHeight : "100%")};
-	min-width: ${(props) => (props.minWidth ? props.minWidth : "auto")};
-	min-height: ${(props) => (props.minHeight ? props.minHeight : "auto")};
+	
+	max-width: ${(props) => props.maxWidth};
+	max-height: ${(props) => props.maxHeight};
+	min-width: ${(props) => props.minWidth}
+	min-height: ${(props) => props.minHeight};
 
 	padding: ${(props) => (props.padding ? props.padding : s_xxsmall)};
 	gap: ${(props) => (props.gap ? props.gap : s_xxsmall)};
@@ -36,13 +36,11 @@ export const Button = styled.button.attrs<CoreProps>(({ dataTestId }) => ({
 	font-size: ${(props) => (props.fontSize ? props.fontSize : fs_regular)};
 	font-family: ${primaryFont || "inherit"};
 	font-weight: ${(props) => (props.fontWeight ? props.fontWeight : fw_regular)};
-	letter-spacing: ${(props) =>
-		props.letterSpacing ? props.letterSpacing : "1"};
+	letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : "1")};
 
 	box-shadow: ${(props) => (props.boxShadow ? props.boxShadow : "none")};
 
-	border-bottom: ${(props) =>
-		props.borderBottom ? props.borderBottom : "none"};
+	border-bottom: ${(props) => (props.borderBottom ? props.borderBottom : "none")};
 	border: ${(props) => (props.border ? props.border : "none")};
 
 	cursor: pointer;

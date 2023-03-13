@@ -17,7 +17,7 @@ const Template: ComponentStory<typeof Tooltip> = (args: TooltipProps) => (
 export const Default = Template.bind({});
 
 Default.args = {
-	tooltipText: "Tooltip Text",
+	label: "Tooltip Text",
 	position: ["bottom", "0%"],
-	displayTooltip: true,
+	id: "storyboo",
 };

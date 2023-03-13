@@ -173,7 +173,8 @@ const InputBox = ({
 					width="2em"
 					aspectRatio="1:1"
 					onClick={handleClear}
-					data-testid="clear-button"
+					//@ts-ignore
+					dataTestId="clear-button"
 				/>
 			) : (
 				rightIcon && rightIcon

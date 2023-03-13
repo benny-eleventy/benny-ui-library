@@ -22,7 +22,8 @@ const BottomSheet = ({
 	return (
 		<CenterAlignedColumnContainer
 			id="bottom-sheet-overlay-container"
-			data-testid="bottom-sheet-overlay-container"
+			//@ts-ignore
+			dataTestId="bottom-sheet-overlay-container"
 			position={isStorybook ? "relative" : "fixed"}
 			bottom="0"
 			width={isStorybook ? "300px" : "100vw"}
@@ -36,7 +37,7 @@ const BottomSheet = ({
 			<A.CenterAlignedColumnContainer
 				//@ts-ignore
 				id="bottom-sheet-wrapper-container"
-				data-testid="bottom-sheet-wrapper-container"
+				dataTestId="bottom-sheet-wrapper-container"
 				width="100%"
 				height="auto"
 				position="absolute"
@@ -69,7 +70,8 @@ const BottomSheet = ({
 				/>
 				<CenterAlignedColumnContainer
 					id="bottom-sheet-close-button"
-					data-testid="bottom-sheet-close-button"
+					//@ts-ignore
+					dataTestId="bottom-sheet-close-button"
 					width="32px"
 					height="32px"
 					position="absolute"

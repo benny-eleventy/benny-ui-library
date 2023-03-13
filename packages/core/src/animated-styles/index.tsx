@@ -1,31 +1,12 @@
 import * as C from "../styles/containers";
 import { Button } from "../styles/styled-button";
-import type { CoreProps } from "../types";
+import type { AnimatedContainerProps, CoreProps } from "../types";
 
-import type {
-	MotionProps,
-	Variants,
-	Variant,
-	EasingDefinition,
-} from "framer-motion";
+import type { Variants, Variant, EasingDefinition } from "framer-motion";
 import type { ComponentType, ReactNode } from "react";
 import * as React from "react";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
-
-interface AcustomInterface {
-	animationType?: "opacity" | "scale" | "rotate" | "x" | "y";
-	animationDuration?: number[];
-	animationConfig?: number[];
-	animationEasing?: EasingDefinition;
-	hoverAnimation?: Variant;
-	clickAnimation?: Variant;
-	animationDelay?: number;
-	animationRepeat?: number;
-	animationRepeatType?: "loop" | "reverse" | "none" | "mirror";
-}
-
-type unionProps = CoreProps & MotionProps & AcustomInterface;
 
 interface GcustomInterface {
 	animationConfig: number[];
@@ -81,12 +62,15 @@ const generateAnimationTypeVariants = ({
 	};
 };
 
-export const A = ({ children }: unionProps) => {
+export const A = ({ children }: AnimatedContainerProps) => {
 	return <>{children}</>;
 };
 
 function createAnimatedComponent(componentName: string) {
-	return function AnimatedComponent({ children, ...rest }: unionProps) {
+	return function AnimatedComponent({
+		children,
+		...rest
+	}: AnimatedContainerProps) {
 		const StyledComponent = (
 			Component: string | ComponentType<{ children?: ReactNode }>
 		) => {
@@ -216,30 +200,3 @@ A.WrappedFlexStartRowContainer = createAnimatedComponent(
 A.GridContainer = createAnimatedComponent(C.GridContainer);
 
 A.Button = createAnimatedComponent(Button);
-
-// A.CenterAlignedColumnContainer = createAnimatedComponent(
-// 	CenterAlignedColumnContainer
-// );
-
-// A.ColumnContainer = createAnimatedComponent(ColumnContainer);
-
-// A.RowContainer = createAnimatedComponent(RowContainer);
-
-// A.FlexContainer = createAnimatedComponent(FlexContainer);
-
-// A.GridContainer = createAnimatedComponent(GridContainer);
-
-// A.WrappedFlexStartCenterAlignedColumnContainer = createAnimatedComponent(
-// 	WrappedFlexStartCenterAlignedColumnContainer
-// );
-
-// A.FlexStartCenterAlignedColumnContainer = createAnimatedComponent(
-// 	FlexStartCenterAlignedColumnContainer
-// );
-
-// A.OverflowFlexStartCenterAlignedColumnContainer = createAnimatedComponent(
-// 	OverflowFlexStartCenterAlignedColumnContainer
-// );
-// A.CenterAlignedRowContainer = createAnimatedComponent(
-// 	CenterAlignedRowContainer
-// );

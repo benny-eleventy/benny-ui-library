@@ -2,9 +2,16 @@ import styled from "styled-components";
 import { br_regular, s_small } from "../../constants";
 import type { CoreProps } from "../../types";
 
-export const Container = styled.div<CoreProps>`
+export const Container = styled.div.attrs<CoreProps>(({ dataTestId }) => ({
+	"data-testid": dataTestId,
+}))<CoreProps>`
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
+
+	max-width: ${(props) => (props.maxWidth ? props.maxWidth : "100%")};
+	max-height: ${(props) => (props.maxHeight ? props.maxHeight : "100%")};
+	min-width: ${(props) => (props.minWidth ? props.minWidth : "auto")};
+	min-height: ${(props) => (props.minHeight ? props.minHeight : "auto")};
 
 	position: ${(props) => props.position};
 	top: ${(props) => props.top};

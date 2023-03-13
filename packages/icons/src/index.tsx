@@ -130,9 +130,8 @@ function createIconComponent(iconName: string) {
 		return (
 			<IconParentContainer
 				{...rest}
-				// @ts-ignore
 				id={`icon-parent-container-${iconName}`}
-				data-testid={`icon-${iconName}`}
+				dataTestId={`icon-${iconName}`}
 				isActive={isActive}
 				onClick={onClick}
 				// @ts-ignore
@@ -147,7 +146,7 @@ function createIconComponent(iconName: string) {
 				<A.CenterAlignedColumnContainer
 					// @ts-ignore
 					id={`icon-container-${iconName}`}
-					data-testid={`icon-container-${iconName}`}
+					dataTestId={`icon-container-${iconName}`}
 					width={getIconSize(_size)}
 				>
 					<IconCmpnt />

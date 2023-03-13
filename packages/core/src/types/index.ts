@@ -1,6 +1,10 @@
+import { EasingDefinition, MotionProps, Variant } from "framer-motion";
 import React from "react";
 
 export interface CoreProps {
+	id?: string;
+	dataTestId?: string;
+
 	onClick?: (e: any) => void;
 	width?: string;
 	minWidth?: string;
@@ -233,3 +237,17 @@ export interface TextProps {
 	alignSelf?: string;
 	justifySelf?: string;
 }
+
+export interface CustomAnimation {
+	animationType?: "opacity" | "scale" | "rotate" | "x" | "y";
+	animationDuration?: number[];
+	animationConfig?: number[];
+	animationEasing?: EasingDefinition;
+	hoverAnimation?: Variant;
+	clickAnimation?: Variant;
+	animationDelay?: number;
+	animationRepeat?: number;
+	animationRepeatType?: "loop" | "reverse" | "none" | "mirror";
+}
+
+export type AnimatedContainerProps = CoreProps & MotionProps & CustomAnimation;

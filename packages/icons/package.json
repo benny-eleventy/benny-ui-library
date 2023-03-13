@@ -1,6 +1,6 @@
 {
 	"name": "@bennyui/icons",
-	"version": "0.0.18",
+	"version": "0.0.19",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
 	"type": "module",
@@ -13,8 +13,8 @@
 		"test": "jest"
 	},
 	"peerDependencies": {
-		"@bennyui/core": ">=0.0.9 <1.0.0",
-		"@bennyui/components": ">=0.0.9 <1.0.0"
+		"@bennyui/components": ">=0.0.9 <1.0.0",
+		"@bennyui/core": ">=0.0.9 <1.0.0"
 	},
 	"publishConfig": {
 		"access": "public"
